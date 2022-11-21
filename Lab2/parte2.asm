@@ -112,28 +112,20 @@
 		sw $ra, ($sp)
 		# se realiza 7 veces la aproximacion newton raphson
   		beq $t0, 7, exitNewton
-		
-		jal f
-		jal df
-		
+		# funcion usada para la aproximacion f(x) = (x^2) - n donde n es el numero a calcular
+		mul.d $f4, $f0, $f0
+		sub.d $f4, $f4, $f2
+		# derivada de la funcion usada para la aproximacion f'(x) = 2x
+		mul.d $f6, $f0, $f10
+		# se divide el resultado de f y df y se le resta a el punto de inicio ($f0 = 1.0)
+		# actualizando valores para el siguiente llamado
+		div.d $f4, $f4, $f6
+		sub.d $f0, $f0, $f4
+		# se suma 1 al contador y se 
 		addi $t0, $t0, 1 
 		jal newtonRaphson
 		# salida de regreso por cada llamada hasta llegar al main
 		exitNewton:
 		lw $ra, ($sp)
 		addi $sp, $sp, 4
-		jr $ra
-	
-	f:
-		# funcion usada para la aproximacion f(x) = (x^2) - n donde n es el numero a calcular
-		mul.d $f4, $f0, $f0
-		sub.d $f4, $f4, $f2
-		jr $ra
-		
-	df:
-		# derivada de la funcion usada para la aproximacion f'(x) = 2x
-		mul.d $f6, $f0, $f10
-	
-		div.d $f4, $f4, $f6
-		sub.d $f0, $f0, $f4
 		jr $ra

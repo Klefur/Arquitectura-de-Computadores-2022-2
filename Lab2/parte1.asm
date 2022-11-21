@@ -1,4 +1,4 @@
-.data
+ .data
 	numero: .space 12
 	pedirNum: .asciiz "Ingrese el numerador: "
 	pedirDiv: .asciiz "Ingrese el denominador: "
@@ -103,7 +103,7 @@
 		# se establece $v0 en 0
 		addi $v0, $zero, 0
 		whileDiv:
-			# si a0 menor a a1 se salta a exitDiv
+			# si a0 (numerador) menor a a1 (denominador) se salta a exitDiv
 			blt $a0, $a1, exitDiv
 			# se resta a $a0 $a1 y se almacena en $a0 asi como tambien a $v0 se le suma 1
 			sub $a0, $a0, $a1
